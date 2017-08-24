@@ -15,6 +15,7 @@ RUN set -x && \
 
 USER activemq
 COPY activemq.xml $ACTIVEMQ_HOME/conf/
+COPY assets/activemq-k8s-discovery-1.0.2-jar-with-dependencies.jar $ACTIVEMQ_HOME/lib/
 
 
 WORKDIR $ACTIVEMQ_HOME
