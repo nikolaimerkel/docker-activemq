@@ -77,7 +77,7 @@
                 (i.e. messageTTL="-1") but create demand subscription only to the next connected
                 broker (i.e. consumerTTL="1"). See AMQ-4607.
             -->
-            <networkConnector uri="k8s://activemq?podLabelKey=app&amp;podLabelValue=amq"
+            <networkConnector uri="k8s://activemq-petset?podLabelKey=name&amp;podLabelValue=activemq"
             dynamicOnly="true"
             networkTTL="3"
             prefetchSize="1"
