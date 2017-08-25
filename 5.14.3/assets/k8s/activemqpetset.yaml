@@ -1,0 +1,53 @@
+# A headless service to create DNS records
+apiVersion: v1
+kind: Service
+metadata:
+  name: activemq-nodes
+  labels:
+    service: activemq-nodes
+spec:
+  ports:
+  - port: 61616
+    protocol: TCP
+    targetPort: 61616
+  # *.nginx.default.svc.cluster.local
+  clusterIP: None
+  selector:
+    name: activemq-node
+---
+apiVersion: apps/v1alpha1
+kind: PetSet
+metadata:
+  name: activemq
+spec:
+  serviceName: activemq-nodes
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: activemq-node
+      annotations:
+        pod.alpha.kubernetes.io/initialized: "true"
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+      - name: activemq-node
+        image: 172.30.1.1:5000/activemq-petset/amqimage
+        ports:
+        - containerPort: 8161
+        - containerPort: 61616
+        - containerPort: 5672
+        - containerPort: 61613
+        - containerPort: 1883
+        - containerPort: 61614
+        volumeMounts:
+        - name: data
+          mountPath: /opt/apache-activemq-5.14.3/examples
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi

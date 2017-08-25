@@ -24,4 +24,5 @@ WORKDIR $ACTIVEMQ_HOME
 # TODO: Numeric for OpenShift
 EXPOSE 61616 5672 61613 1883 61614 8161
 
+USER root
 CMD ["/bin/sh", "-c", "bin/activemq console"]
