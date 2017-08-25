@@ -10,7 +10,7 @@ spec:
   - port: 61616
     protocol: TCP
     targetPort: 61616
-  # *.nginx.default.svc.cluster.local
+  # *.activemq-nodes.default.svc.cluster.local
   clusterIP: None
   selector:
     name: activemq-node
@@ -29,7 +29,7 @@ spec:
       annotations:
         pod.alpha.kubernetes.io/initialized: "true"
     spec:
-      terminationGracePeriodSeconds: 0
+      terminationGracePeriodSeconds: 60
       containers:
       - name: activemq-node
         image: 172.30.1.1:5000/activemq-petset/amqimage
@@ -42,7 +42,7 @@ spec:
         - containerPort: 61614
         volumeMounts:
         - name: data
-          mountPath: /opt/apache-activemq-5.14.3/examples
+          mountPath: /opt/activemq/data
   volumeClaimTemplates:
   - metadata:
       name: data
