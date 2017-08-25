@@ -25,4 +25,5 @@ WORKDIR $ACTIVEMQ_HOME
 EXPOSE 61616 5672 61613 1883 61614 8161
 
 USER root
+VOLUME $ACTIVEMQ_HOME/data
 CMD ["/bin/sh", "-c", "bin/activemq console"]
